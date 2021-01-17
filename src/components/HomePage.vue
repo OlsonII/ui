@@ -23,6 +23,7 @@ export default {
     },
     receiveMessage: function (code){
       this.code = code;
+      console.log(this.code);
     },
   },
   created() {
