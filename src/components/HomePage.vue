@@ -7,35 +7,28 @@
 
 <script>
 
-export const socket = new WebSocket('ws://localhost:3080');
+import {ServerService} from "@/services/server.service";
 
 export default {
   name: 'HomePage',
-  props: {
-    socket: socket
-  },
   data() {
     return {
-      code: ' ',
+      code: ' '
     }
   },
   methods: {
     sendMessage: function (){
-      socket.send(JSON.stringify({
-        event: 'messageToServer'
-      }));
-      socket.onmessage = (code) => this.receiveMessage(code)
+      ServerService.sendMessage();
+      this.receiveMessage(ServerService.message)
     },
     receiveMessage: function (code){
-      console.log(code.data);
-      this.code = code.data;
+      console.log('code: ' + code);
+      this.code = code;
     },
   },
-  created(){
-    socket.onopen = function (){
-      console.log('conected');
-    }
-  },
+  created() {
+    ServerService.createConnection();
+  }
 }
 </script>
 
