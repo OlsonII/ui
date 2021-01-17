@@ -19,10 +19,9 @@ export default {
   methods: {
     sendMessage: function (){
       ServerService.sendMessage();
-      this.receiveMessage(ServerService.message)
+      ServerService.socket.onmessage = (m) =>  this.receiveMessage(m.data);
     },
     receiveMessage: function (code){
-      console.log('code: ' + code);
       this.code = code;
     },
   },
